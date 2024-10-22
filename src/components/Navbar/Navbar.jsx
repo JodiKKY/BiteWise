@@ -1,5 +1,6 @@
 import React from 'react'
 import LogoImg from '../../assets/logo2.png'
+import { Link } from 'react-router-dom'
 const Navbar = () => {
   return (
     <div className='py-4'>
@@ -20,7 +21,11 @@ const Navbar = () => {
           </li>
           <li> <button className='hover:border-b-2 border-primary uppercase'>Events</button>
           </li>
-          <li> <button className='hover:border-b-2 border-primary uppercase'>Restaurants</button>
+            <li><Link to='/Restaurants'>
+            <button className='hover:border-b-2 border-primary uppercase'>Restaurants</button>
+            </Link> 
+           
+            
           </li>
         </ul>
       </div>
