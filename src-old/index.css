@@ -6,9 +6,6 @@
   .primary-btn{
     @apply bg-primary text-white font-bold px-4 py-2 rounded-full;
   }
-.secondary-btn{
-  @apply bg-white text-black font-bold px-4 py-3 rounded-lg;
-}
 }
 @keyframes spin {
   to {
@@ -17,8 +14,8 @@
 }
 .animate-spin {
   animation: spin 7s linear infinite;
-  
 }
 
-
-  
+/* @layer utilities {
+  .img-shadow {
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.4));}} */

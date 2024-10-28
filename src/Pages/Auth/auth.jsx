@@ -2,24 +2,27 @@ import React from 'react'
 
 function auth() {
   const [signIn, toggle] = React.useState(true);
+  
+    
+
   return (
     <Container>
       <SignUpContainer signingIn={signIn}>
         <form>
-          <title>Create Account</title>
+          <h2>Create Account</h2>
           <input type="text" placeholder="Name" />
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
+          <button type="submit">Sign Up</button>
         </form>
       </SignUpContainer>
       <SignInContainer signingIn={signIn}>
         <form>
-          <title>Sign in</title>
+          <h2>Sign in</h2>
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
-          <Anchor href="#">Forgot your password?</Anchor>
-          <button>Sign In</button>
+          <a href="#">Forgot your password?</a>
+          <button type="submit">Sign In</button>
         </form>
       </SignInContainer>
       <OverlayContainer signingIn={signIn}>
@@ -34,13 +37,13 @@ function auth() {
             </GhostButton>
           </LeftOverlayPanel>
           <RightOverlayPanel signingIn={signIn}>
-            <title>Hello, Friend!</title>
+            <h2>Hello, Friend!</h2>
             <p>
               Enter your personal details and start journey with us
             </p>
-            <Components.GhostButton onClick={() => toggle(false)}>
+            <GhostButton onClick={() => toggle(false)}>
               Sign Up
-            </Components.GhostButton>
+            </GhostButton>
           </RightOverlayPanel>
         </Overlay>
       </OverlayContainer>
