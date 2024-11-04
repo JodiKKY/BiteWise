@@ -13,7 +13,7 @@ const auth = () => {
                 <input className="p-2 mt-8 rounded-xl border" type="email" name="email" placeholder="Email" />
                 <div className="relative">
                     <input className="p-2 rounded-xl border w-full" type="password" name="password" id="password" placeholder="Password" />
-                    {/* <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" id="togglePassword"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" id="togglePassword"
                         className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer z-20 opacity-100"
                         viewBox="0 0 16 16">
                         <path
@@ -22,7 +22,7 @@ const auth = () => {
                         <path
                             d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z">
                         </path>
-                    </svg> */}
+                    </svg>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         className="bi bi-eye-slash-fill absolute top-1/2 right-3 -z-1 -translate-y-1/2 cursor-pointer hidden"
                         id="mama" viewBox="0 0 16 16">
