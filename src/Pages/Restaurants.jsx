@@ -1,9 +1,25 @@
-import React from 'react'
+import React from 'react';
+import Card from '../components/Card/Card';
+import Pic from '../assets/1.png';
 
 const Restaurants = () => {
-  return (
-    <div>Restaurants</div>
-  )
-}
+  const cardsData = [
+    { title: 'Honeysuckle Restaurant ', description: 'This is one card', image: Pic },
+    
+  ];
 
-export default Restaurants
+  return (
+    <div className='flex flex-wrap justify-center'>
+      {cardsData.map((card, index) => (
+        <Card
+          key={index}
+          title={card.title}
+          description={card.description}
+          image={card.image} // Pass the image prop here
+        />
+      ))}
+    </div>
+  );
+};
+
+export default Restaurants;
