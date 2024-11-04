@@ -15,10 +15,7 @@ function AppRoutes  () {
       <Route path='/Restaurants' element={<Restaurants />}/>
       <Route path='/Restaurant-owner' element={<Restaurant_owner/>}/>
 
-      {/* <Route path='app' element={<ProtectedRoutes />}>
-        <Route path='jobs' element={<Jobs />} />
-        <Route path='jobs/:id' element={<SelectedJob />} />
-      </Route> */}
+     
     </Routes>
   );
 };
