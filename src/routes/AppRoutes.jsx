@@ -15,7 +15,6 @@ function AppRoutes  () {
       <Route path='/Restaurants' element={<Restaurants />}/>
       <Route path='/Restaurant-owner' element={<Restaurant_owner/>}/>
 
-     
     </Routes>
   );
 };
