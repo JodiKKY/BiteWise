@@ -11,7 +11,7 @@ const homepage = () => {
         <h1 className="text-4xl lg:text-6xl font-semibold">
           Delicious Food Is Waiting For You
         </h1>
-        <p className="font-semibold">
+        <p className="font-semibold text-2xl">
         Welcome to Bite<span className='text-orange-500'>Wise</span>.Discover a world of culinary delights as you explore a diverse selection of restaurants, their menus, and pricing. Share your experiences by reviewing dishes and offering your favorite food combo suggestions. Join our community of food lovers and make every meal a memorable one! Happy dining!
         </p>
         
