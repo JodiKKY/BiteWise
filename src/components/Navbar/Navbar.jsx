@@ -42,7 +42,7 @@ const Navbar = () => {
       </div>
        {/* login section  */}
        <div>
-        <Link to='/auth'>
+        <Link to='/login'>
         <button className='bg-primary text-white font-bold px-4 py-2 rounded-md'>LOGIN</button>
         </Link>
        </div>
