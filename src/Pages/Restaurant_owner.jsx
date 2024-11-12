@@ -4,7 +4,7 @@ import Photo from '../assets/register.jpg';
 const Restaurant_owner = () => {
   return (
     <section className="bg-white min-h-screen flex">
-      <div className="bg-[#dfa674] w-1/2 flex flex-col justify-center p-5 relative z-10">
+      <div className="bg-[#eb760f] w-1/2 flex flex-col justify-center p-5 relative z-10">
         <h2 className="font-bold text-3xl text-white text-center font-serif">Register Your Restaurant</h2>
         <p className="text-sm mt-4 text-black">Join us and showcase your restaurant!</p>
 
@@ -24,7 +24,7 @@ const Restaurant_owner = () => {
         </div>
       </div>
       <div className="w-1/2 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#dfa674] to-transparent rounded-l-2xl z-20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#e77b1d] to-transparent rounded-l-2xl z-20"></div>
         <img className=" h-full object-cover" src={Photo} alt="register form image" />
     </div>
     </section>
