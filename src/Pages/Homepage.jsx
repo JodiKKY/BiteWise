@@ -26,11 +26,7 @@ const homepage = () => {
       </div>
       {/* image section */}
       <div className="flex flex-col justify-center">
-        <img
-          src={HeroImg}
-          alt=""
-          className="animate-spin img-shadow w-[400px] mx-auto "
-        />
+        <img className="animate-spin img-shadow w-[400px] mx-auto "src={HeroImg} alt="" />
       </div>
     </div>
     <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[600px] bg-orange-500">
