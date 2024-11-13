@@ -18,7 +18,7 @@ const homepage = () => {
         <div className="flex gap-4 items-center md:justify-start justify-center">
         <Link to = '/Restaurants'>
           <button className="primary-btn hover:scale-105 duration-200">
-            Explore Restaurants
+            Explore Restaurants.
           </button>
           </Link>
         </div>
