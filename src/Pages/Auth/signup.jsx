@@ -2,8 +2,20 @@
  import React from 'react'
   import { Link } from 'react-router-dom'
   import Image from "/Users/user/Desktop/Work/BiteWise/src/assets/1.png"
-  
-  const signup = () => {
+  import Validation from "./SignupValidation"
+ function signup()  {
+   const[values,setValues]=useState({
+    email: '',
+    password: ''
+   })
+   const[errors,setErrors]=useState({})
+    const handleInput =(event)=>{
+      setValues(prev =>({...prev,[event.target.name]:[event.target.value]}))
+    }
+    const handleSubmit =(event) =>{
+      event.preventDefault();
+      setErrors(Validation(values))
+    }
     return (
      
       <section className="bg-white min-h-screen flex box-border justify-center items-center">
@@ -61,7 +73,7 @@
             {/* Register Button */}
             <button
               className="bg-orange-500 text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-orange-400 font-medium"
-              type="submit"
+              type="Submit"
             >
               Register
             </button>

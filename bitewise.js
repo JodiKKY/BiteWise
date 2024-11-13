@@ -1,3 +1,11 @@
+
+// const mysql = require('mysql');
+// const express = require('express');
+// const session = require('express-session');
+// const path = require('path');
+
+
+
 import { createConnection } from "mysql";
 var con = createConnection({
 host: "localhost",

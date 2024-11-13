@@ -36,7 +36,7 @@ const login = () => {
                             </path>
                         </svg>
                     </div>
-                    <button className="bg-orange-500 text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-orange-400 font-medium" type="submit">Login</button>
+                    <button className="bg-orange-500 text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-orange-400 font-medium" type="Submit">Login</button>
                 </form>
                 <div className="mt-6 items-center text-gray-100">
                     <hr className="border-black" />
