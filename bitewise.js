@@ -1,9 +1,8 @@
 
 // const mysql = require('mysql');
-// const express = require('express');
-// const session = require('express-session');
-// const path = require('path');
-
+import express from 'express'
+// const cors = require('cors')
+// app.use(cors())
 
 
 import { createConnection } from "mysql";
@@ -14,12 +13,32 @@ password: null,
 database: "bitewise",
 });
 
-con.connect(function (err) {
-    if (err) {
-        console.log('Error connecting to Db');
-        return;
+// con.connect(function (err) {
+//     if (err) {
+//         console.log('Error connecting to Db');
+//         return;
+//     }
+//     console.log('Connection established');
+// });
+
+
+app.post('/bitewise',(req,res)=>{
+ const sql = "INSERT INTO user_table('email','firstName','lastName','password') VALUES(?)";
+ const values =[
+    req.body.email,
+    req.body.firstName,
+    req.body.lastName,
+    req.body.password
+
+ ]
+ db.query(sql,[values],(error,data) =>{
+    if(err){
+        return res.json('Error')
     }
-    console.log('Connection established');
-});
+    return res.json(data);
+ })
+})
 
-
+app.listen(8081,()=>{
+    console.log('listening')
+})

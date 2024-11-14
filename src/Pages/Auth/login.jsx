@@ -1,7 +1,20 @@
-    import React from 'react'
+    import React, { useState } from 'react'
     import Image from "/Users/user/Desktop/Work/BiteWise/src/assets/1.png"
     import { Link } from 'react-router-dom'
-const login = () => {
+    import Validation from './LoginValidation'
+function login() {
+    const[values,setValues]=useState({
+        email:'',
+        password:''
+    })
+    const[error,setErrors]= useState({})
+    const handleInput =(event) =>{
+        setValues(prev =>({...prev,[event.target.name]:[event.target.value]}))
+    }
+    const handleSubmit =(event) => {
+        event.preventDefault();
+        setErrors(Validation(values));
+    }
   return (
 
    
@@ -11,10 +24,13 @@ const login = () => {
                 <h2 className="font-bold text-3xl text-white text-center font-serif">Login</h2>
                 <p className="text-sm mt-4 text-black">If you already a member, easily log in now.</p>
     
-                <form action="" className="flex flex-col gap-4">
-                    <input className="p-2 mt-8 rounded-xl border" type="email" name="email" placeholder="Email" />
-                    <div className="relative">
-                        <input className="p-2 rounded-xl border w-full" type="password" name="password" id="password" placeholder="Password" />
+                <form action="submit"   className="flex flex-col gap-4">
+                    <div><input className="p-2 rounded-xl border w-full" type="email" name="email" placeholder="Email" onChange={handleInput}/>
+                     {error.email && <span className='text-danger'>{error.email}</span>}
+                     </div>
+                     <div className="relative" >
+                        <input className="p-2 rounded-xl border w-full" type="password" name="password" id="password" placeholder="Password"onChange={handleInput} />
+                        {error.password && <span className='text-danger'>{error.password}</span>}
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" id="togglePassword"
                             className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer z-20 opacity-100"
                             viewBox="0 0 16 16">
