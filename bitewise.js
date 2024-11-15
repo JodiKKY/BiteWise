@@ -1,9 +1,10 @@
+import mysql from 'mysql'
+import express from 'express';
+import cors from 'cors';
 
-// const mysql = require('mysql');
-import express from 'express'
-// const cors = require('cors')
-// app.use(cors())
-
+const app= express();
+app.use(cors())
+app.use(express.json())
 
 import { createConnection } from "mysql";
 var con = createConnection({
@@ -31,14 +32,14 @@ app.post('/bitewise',(req,res)=>{
     req.body.password
 
  ]
- db.query(sql,[values],(error,data) =>{
+ db.query(sql,[values],(err,data) =>{
     if(err){
         return res.json('Error')
     }
     return res.json(data);
  })
 })
-
+const port =8081;
 app.listen(8081,()=>{
     console.log('listening')
 })

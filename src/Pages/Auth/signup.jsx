@@ -1,6 +1,6 @@
 
  import React,{useState} from 'react'
-  import { Link } from 'react-router-dom'
+  import { Link, useNavigate } from 'react-router-dom'
   import Image from "/Users/user/Desktop/Work/BiteWise/src/assets/1.png"
   import Validation from "./SignupValidation"
   import axios from 'axios'
@@ -11,6 +11,7 @@
     email: '',
     password: ''
    })
+   const navigate =useNavigate();
    const[errors,setErrors]=useState({})
     const handleInput =(event)=>{
       setValues(prev =>({...prev,[event.target.name]:[event.target.value]}))
@@ -28,8 +29,8 @@
      
       <section className="bg-white min-h-screen flex box-border justify-center items-center">
       <div className="bg-[#dfa674] rounded-2xl flex max-w-3xl p-5 items-center">
-        <div className="md:w-1/2 px-8">
-          <h2 className="font-bold text-3xl text-white text-center font-serif">Register</h2>
+         <div className="md:w-1/2 px-8">
+          <h2 className="font-bold text-3xl text-white text-center font-serif">SignUp</h2>
           <p className="text-sm mt-4 text-black">Create an account to get started.</p>
 
           <form action="submit" onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -72,7 +73,7 @@
               </svg>
             </div>
 
-            {/* Register Button */}
+            {/* RSignUp Button */}
             <button
               className="bg-orange-500 text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-orange-400 font-medium"
               type="submit"
