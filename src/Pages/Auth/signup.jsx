@@ -3,7 +3,7 @@
   import { Link } from 'react-router-dom'
   import Image from "/Users/user/Desktop/Work/BiteWise/src/assets/1.png"
   import Validation from "./SignupValidation"
-  import axios from ''axios
+  import axios from 'axios'
  function signup()  {
    const[values,setValues]=useState({
     firstName:'',
@@ -19,7 +19,9 @@
       event.preventDefault();
       setErrors(Validation(values))
       if(errors.email== "" && errors.lastName == "" && errors.firstName == "" && errors.password == "" ){
-        axios.post""
+        axios.post("http://localhost:8081/signup",values)
+        .then(res => console.log(res))
+        .catch(err=> console.log(err))
       }
     }
     return (
