@@ -21,7 +21,9 @@
       setErrors(Validation(values))
       if(errors.email== "" && errors.lastName == "" && errors.firstName == "" && errors.password == "" ){
         axios.post("http://localhost:8081/signup",values)
-        .then(res => console.log(res))
+        .then(res =>{
+          navigate('/');
+        })
         .catch(err=> console.log(err))
       }
     }

@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import Homepage from '../Pages/Homepage'
 import Restaurants from '../Pages/Restaurants'
 import Login from '../Pages/Auth/Login'
-import Signup from '../Pages/Auth/Signup'
 import Events from '../Pages/Events'
+import Signup from '../Pages/Auth/signup'
 import Restaurant_owner from '../Pages/Restaurant_owner'
 
 function AppRoutes  () {
@@ -21,3 +21,4 @@ function AppRoutes  () {
 };
 
 export default AppRoutes;
+
