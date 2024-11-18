@@ -20,7 +20,7 @@
       event.preventDefault();
       setErrors(Validation(values))
       if(errors.email== "" && errors.lastName == "" && errors.firstName == "" && errors.password == "" ){
-        axios.post("http://localhost:8081/signup",values)
+        axios.post("http://localhost:3000/Signup",values)
         .then(res =>{
           navigate('/');
         })
