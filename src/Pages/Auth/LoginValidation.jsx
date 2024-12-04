@@ -9,7 +9,7 @@ function Validation(values) {
     if (values.email === "") {
       error.email = "Email should not be empty";
     } else if (!email_pattern.test(values.email)) {
-      error.email = "Email doesn't match the required format";
+      error.email = "Email is wrong";
     } else {
       error.email = "";  
     }
@@ -18,7 +18,7 @@ function Validation(values) {
     if (values.password === "") {
       error.password = "Password should not be empty";
     } else if (!password_pattern.test(values.password)) {
-      error.password = "Password is incorrect. It must be at least 8 characters long, include 1 uppercase letter, 1 lowercase letter, and 1 number";
+      error.password = "Password is incorrect.Try Again";
     } else {
       error.password = "";  
     }
