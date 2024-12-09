@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
+// import multer from multer;
 
 const app = express();
 const port = 3000;
@@ -10,6 +11,9 @@ const port = 3000;
 // Middleware
 app.use(cors()); // Allow cross-origin requests
 app.use(bodyParser.json()); // Parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// const upload = multer({ dest: "uploads/" });
 
 // Create MySQL connection
 const con = mysql.createConnection({
