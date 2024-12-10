@@ -5,6 +5,7 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import fs from "fs";
 import path from "path";
+import imageFolder from "./src/assets/restaurant_images"
 
 
 const app = express();
