@@ -5,7 +5,7 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import fs from "fs";
 import path from "path";
-import imageFolder from "./src/assets/restaurant_images"
+
 
 
 const app = express();
@@ -140,7 +140,7 @@ app.listen(3000, () => {
 
 
 // Folder containing the images
-const imageFolder = "./src/assets/restaurant_image";
+const imageFolder = "./src/assets/restaurant_images";
 
 fs.readdir(imageFolder, (err, files) => {
   if (err) {
