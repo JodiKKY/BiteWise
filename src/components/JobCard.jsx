@@ -1,7 +1,7 @@
 import React from 'react';
 function JobCard({ restaurant, formatTime }) {
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md">
+        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             {/* Display Restaurant Image (if available) */}
             <div className="flex justify-center">
             <img 
