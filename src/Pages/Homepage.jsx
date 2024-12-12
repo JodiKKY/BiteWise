@@ -10,7 +10,7 @@ const Homepage = () => {
     <div>
       <div className="container min-h-[600px] flex items-center justify-center text-white"
         style={{
-        backgroundImage: `url(${Bg1})`, // Wrap in `url()`
+        backgroundImage: `url(${Bg1})`, 
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

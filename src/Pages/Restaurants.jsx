@@ -37,16 +37,17 @@ function App() {
                 Display Restaurants
             </button>
 
-            {/* Display restaurant cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-4 gap-6 mt-6">
-                {restaurants.map(restaurant => (
-                    <JobCard 
-                        key={restaurant.restaurant_id} 
-                        restaurant={restaurant} 
-                        formatTime={formatTimeToHoursAndMinutes} // Pass the function as a prop
-                    />
-                ))}
-            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5 mt-6 w-full">
+  {restaurants.map(restaurant => (
+    <JobCard 
+      key={restaurant.restaurant_id} 
+      restaurant={restaurant} 
+      formatTime={formatTimeToHoursAndMinutes} 
+    />
+  ))}
+</div>
+
         </div>
     );
 }

@@ -120,9 +120,8 @@ app.get('/Restaurants', (req, res) => {
       }
       const processedResults = results.map((restaurant) => ({
           ...restaurant,
-          restaurant_images: restaurant.restaurant_images
-              ? `data:image/png;base64,${Buffer.from(restaurant.restaurant_images).toString('base64')}`
-              : null, 
+          restaurant_images: restaurant.restaurant_images||null,
+              
       }));
 
       res.json(processedResults);
@@ -141,34 +140,31 @@ app.listen(3000, () => {
 
 // Folder containing the images
 const imageFolder = "./src/assets/restaurant_images";
-
-fs.readdir(imageFolder, (err, files) => {
-  if (err) {
-    console.error("Failed to read folder:", err);
-    return;
-  }
-
-  files.forEach((file) => {
-    const restaurantId = parseInt(path.parse(file).name, 10); // Extract restaurant ID from filename
-    const filePath = path.join(imageFolder, file);
-
-    const validExtensions = [".jpg", ".jpeg", ".png"];
-    if (!validExtensions.includes(path.extname(file).toLowerCase())) {
-      console.error(`Invalid file type: ${file}`);
-      return;
+app.get("/Restaurants", (req, res) => {
+  const query = "SELECT restaurant_id, restaurant_name, location, cuisine, starting_time, ending_time, minprice, maxprice FROM restaurant_table";
+  con.query(query, (error, results) => {
+    if (error) {
+      console.error("Error fetching data:", error);
+      return res.status(500).send("Error fetching data");
     }
+    res.json(results);
+  });
+});
 
-    // Read the image as binary data
-    const imageData = fs.readFileSync(filePath);
-
-    // Update the database with the image
-    const sql = "UPDATE restaurant_table SET restaurant_images = ? WHERE restaurant_id = ?";
-    con.query(sql, [imageData, restaurantId], (err, result) => {
-      if (err) {
-        console.error(`Failed to upload image for restaurant ${restaurantId}:`, err);
-      } else {
-        console.log(`Image for restaurant ${restaurantId} uploaded successfully.`);
-      }
-    });
+// Serve image for a specific restaurant
+app.get("/Restaurants/:id/image", (req, res) => {
+  const restaurantId = req.params.id;
+  const query = "SELECT restaurant_images FROM restaurant_table WHERE restaurant_id = ?";
+  con.query(query, [restaurantId], (error, results) => {
+    if (error) {
+      console.error("Error fetching image:", error);
+      return res.status(500).send("Error fetching image");
+    }
+    if (results.length > 0 && results[0].restaurant_images) {
+      res.setHeader("Content-Type", "image/png");
+      res.send(results[0].restaurant_images);
+    } else {
+      res.status(404).send("Image not found");
+    }
   });
 });
