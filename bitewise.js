@@ -148,6 +148,7 @@ app.get("/Restaurants", (req, res) => {
       return res.status(500).send("Error fetching data");
     }
     res.json(results);
+    console.log(res.json(results))
   });
 });
 
