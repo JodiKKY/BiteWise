@@ -1,90 +1,117 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import JobCard from '../components/JobCard';
+import FilterComponent from "../components/FilterComponent";
 
 function App() {
-    const [restaurants, setRestaurants] = useState([]); // Store restaurant data
-    const [loading, setLoading] = useState(false); // Loading state
-    const [error, setError] = useState(null); // Error state
+  const [restaurants, setRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
 
-    // const fetchData = () => {
-    //     setLoading(true);
-    //     setError(null); // Reset error
-    //     axios.get('http://localhost:3000/Restaurants')
-    //         .then(response => {
-    //             setRestaurants(response.data); // Update state with fetched data
-    //             console.log(response.data[0].restaurant_images)
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //             setError('Failed to fetch restaurants. Please try again.');
-    //         })
-    //         .finally(() => {
-    //             setLoading(false);
-    //         });
-    // };
+  useEffect(() => {
+    applyFilters();
+  }, [filters, searchQuery]);
 
+  const fetchData = () => {
+    setLoading(true);
+    setError(null);
+    axios.get('http://localhost:3000/Restaurants')
+      .then(response => {
+        const processedData = response.data.map(restaurant => {
+          if (restaurant.restaurant_images?.data) {
+            const blob = new Blob([new Uint8Array(restaurant.restaurant_images.data)], { type: 'image/png' });
+            restaurant.imageUrl = URL.createObjectURL(blob);
+          } else {
+            restaurant.imageUrl = null;
+          }
+          return restaurant;
+        });
+        setRestaurants(processedData);
+        setFilteredRestaurants(processedData);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setError('Failed to fetch restaurants. Please try again.');
+      })
+      .finally(() => setLoading(false));
+  };
 
+  const applyFilters = () => {
+    let filtered = restaurants;
 
-    const fetchData = () => {
-        setLoading(true);
-        setError(null); // Reset error
-        axios.get('http://localhost:3000/Restaurants')
-            .then(response => {
-                // Convert Buffer to Blob and generate Object URL for each restaurant
-                const processedData = response.data.map(restaurant => {
-                    if (restaurant.restaurant_images && restaurant.restaurant_images.data) {
-                        const blob = new Blob([new Uint8Array(restaurant.restaurant_images.data)], { type: 'image/png' });
-                        restaurant.imageUrl = URL.createObjectURL(blob); // Add generated URL
-                    } else {
-                        restaurant.imageUrl = null; // Fallback if no image
-                    }
-                    return restaurant;
-                });
-                setRestaurants(processedData); // Update state with processed data
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setError('Failed to fetch restaurants. Please try again.');
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    };
-    
-    const formatTimeToHoursAndMinutes = (timeString) => {
-        const [time] = timeString.split('.'); // Split to remove microseconds
-        const [hours, minutes] = time.split(':'); // Split time into hours and minutes
-        return `${hours}:${minutes}`; // Return formatted time
-    };
+    if (filters.priceRange) {
+      filtered = filtered.filter(r => r.priceRange === filters.priceRange);
+    }
 
-    return (
-        <div className="space-y-6 w-full max-w-4xl mx-auto p-4">
-            <h1 className="text-3xl font-semibold text-center mb-4">Restaurant Listings</h1>
+    if (filters.cuisine) {
+      filtered = filtered.filter(r => r.cuisine.toLowerCase() === filters.cuisine.toLowerCase());
+    }
 
-            {/* Button to fetch data */}
-            <button 
-                onClick={fetchData} 
-                className="primary-btn hover:scale-105 duration-200"
-            >
-                Display Restaurants
-            </button>
+    if (filters.rating) {
+      filtered = filtered.filter(r => r.rating >= parseInt(filters.rating, 10));
+    }
 
-            {/* Display Loading, Error, or Restaurant Cards */}
-            {loading && <p className="text-center text-gray-500">Loading...</p>}
-            {error && <p className="text-center text-red-500">{error}</p>}
+    if (searchQuery) {
+      filtered = filtered.filter(r =>
+        r.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5 mt-6 w-full">
-                {restaurants.map((restaurant) => (
-                    <JobCard 
-                        key={restaurant.restaurant_id} 
-                        restaurant={restaurant} 
-                        formatTime={formatTimeToHoursAndMinutes} 
-                    />
-                ))}
-            </div>
+    setFilteredRestaurants(filtered);
+  };
+
+  const formatTimeToHoursAndMinutes = (timeString) => {
+    const [time] = timeString.split('.');
+    const [hours, minutes] = time.split(':');
+    return `${hours}:${minutes}`;
+  };
+
+  return (
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <div className="w-1/4 bg-gray-100 p-4 border-r">
+        <h2 className="text-xl font-semibold mb-4">Filters</h2>
+        <FilterComponent onFilter={setFilters} />
+         
+        <button
+          onClick={applyFilters}
+          className="w-full mt-4 bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+        >
+          Apply Filters
+        </button>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 p-6">
+        <h1 className="text-3xl font-semibold mb-6">Restaurant Listings</h1>
+        
+
+        {/* Display Restaurants Button */}
+        <button
+          onClick={fetchData}
+          className="bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600 mb-6"
+        >
+          Display Restaurants
+        </button>
+
+        {loading && <p className="text-center text-gray-500">Loading...</p>}
+        {error && <p className="text-center text-red-500">{error}</p>}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredRestaurants.map(restaurant => (
+            <JobCard
+              key={restaurant.restaurant_id}
+              restaurant={restaurant}
+              formatTime={formatTimeToHoursAndMinutes}
+            />
+          ))}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default App;
