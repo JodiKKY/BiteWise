@@ -66,12 +66,7 @@ const FilterComponent = ({ onFilter }) => {
         </select>
       </div>
 
-      {/* Filter Button */}
-      {/* <button
-        onClick={handleFilter}
-      className="w-full mt-4 bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600">
-      Apply Filters
-    </button> */}
+      
     </div>
   );
 };
