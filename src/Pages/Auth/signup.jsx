@@ -1,7 +1,7 @@
 
  import React,{useState} from 'react'
   import { Link, useNavigate } from 'react-router-dom'
-  import Image from "/Users/user/Desktop/Work/BiteWise/src/assets/1.png"
+  import Image from "/src/assets/1.png"
   import Validation from "./SignupValidation"
   import axios from 'axios'
  function signup()  {

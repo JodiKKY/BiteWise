@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from "/Users/jodikky/Documents/GitHub/BiteWise/src/assets/";
+import Image from "/src/assets/1.png";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Validation from './LoginValidation';
