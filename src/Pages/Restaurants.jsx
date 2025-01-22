@@ -86,7 +86,7 @@ function App() {
 
       {/* Main Content */}
       <div className="flex-1 p-6">
-        <h1 className="text-3xl font-semibold mb-6">Restaurant Listings</h1>
+        <h1 className="text-3xl font-semibold mb-6">Restaurants</h1>
         
 
         {/* Display Restaurants Button */}
