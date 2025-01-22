@@ -31,6 +31,7 @@ function JobCard({ restaurant, formatTime }) {
                 <p className="text-gray-600 dark:text-gray-400">
                     Price: ${restaurant.minprice} - ${restaurant.maxprice}
                 </p>
+                
             </div>
         </div>
     );
