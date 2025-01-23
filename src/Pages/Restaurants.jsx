@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import JobCard from '../components/JobCard';
-import FilterComponent from "../components/FilterComponent";
+import FilterComponent from '../components/FilterComponent';
 
 function App() {
   const [restaurants, setRestaurants] = useState([]);
@@ -10,6 +11,7 @@ function App() {
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     applyFilters();
@@ -88,7 +90,6 @@ function App() {
       <div className="flex-1 p-6">
         <h1 className="text-3xl font-semibold mb-6">Restaurants</h1>
         
-
         {/* Display Restaurants Button */}
         <button
           onClick={fetchData}
@@ -102,12 +103,16 @@ function App() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredRestaurants.map(restaurant => (
-            <JobCard
+            <div
               key={restaurant.restaurant_id}
-              restaurant={restaurant}
-              formatTime={formatTimeToHoursAndMinutes}
-              
-            />
+              onClick={() => navigate(`/restaurant/${restaurant.restaurant_id}`)}
+              className="cursor-pointer"
+            >
+              <JobCard
+                restaurant={restaurant}
+                formatTime={formatTimeToHoursAndMinutes}
+              />
+            </div>
           ))}
         </div>
       </div>

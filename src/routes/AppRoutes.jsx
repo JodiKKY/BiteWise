@@ -5,6 +5,7 @@ import Login from '../Pages/Auth/login'
 import Events from '../Pages/Events'
 import Signup from '../Pages/Auth/signup'
 import Restaurant_owner from '../Pages/Restaurant_owner'
+import RestaurantDetails from '../Pages/RestaurantDetails'
 
 
 function AppRoutes  () {
@@ -15,7 +16,8 @@ function AppRoutes  () {
       <Route path="/Signup" element={<Signup />} />
       <Route path='/Events' element={<Events />} />
       <Route path='/Restaurants' element={<Restaurants />}/>
-      <Route path='/Restaurant-owner' element={<Restaurant_owner/>}/>
+      <Route path='/Restaurant_owner' element={<Restaurant_owner/>}/>
+      <Route path="/Restaurant/:id" element={<RestaurantDetails />} />
      </Routes>
   );
 };
