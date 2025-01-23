@@ -112,7 +112,7 @@ app.post('/Login', async (req, res) => {
 });
 
 app.get('/Restaurants', (req, res) => {
-  const query = 'SELECT restaurant_name, location, cuisine, starting_time, ending_time, minprice, maxprice, restaurant_images FROM restaurant_table';
+  const query = 'SELECT restaurant_name, location, cuisine, starting_time, ending_time, minprice, maxprice, restaurant_images,ratings FROM restaurant_table';
   con.query(query, (error, results) => {
       if (error) {
           console.error('Error fetching data:', error.stack);
@@ -141,7 +141,7 @@ app.listen(3000, () => {
 // Folder containing the images
 const imageFolder = "./src/assets/restaurant_images";
 app.get("/Restaurants", (req, res) => {
-  const query = "SELECT restaurant_id, restaurant_name, location, cuisine, starting_time, ending_time, minprice, maxprice FROM restaurant_table";
+  const query = "SELECT restaurant_id, restaurant_name, location, cuisine, starting_time, ending_time, minprice, maxprice,ratings FROM restaurant_table";
   con.query(query, (error, results) => {
     if (error) {
       console.error("Error fetching data:", error);

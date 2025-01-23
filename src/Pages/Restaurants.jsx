@@ -106,6 +106,7 @@ function App() {
               key={restaurant.restaurant_id}
               restaurant={restaurant}
               formatTime={formatTimeToHoursAndMinutes}
+              
             />
           ))}
         </div>
