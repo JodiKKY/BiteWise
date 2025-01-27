@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import JobCard from '../components/JobCard';
-import FilterComponent from '../components/FilterComponent';
+import FilterComponent from '../components/FilterComponent'
 
 function App() {
   const [restaurants, setRestaurants] = useState([]);
