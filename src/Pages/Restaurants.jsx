@@ -23,12 +23,14 @@ function App() {
     axios.get('http://localhost:3000/Restaurants')
       .then(response => {
         const processedData = response.data.map(restaurant => {
+          console.log({restaurant});
           if (restaurant.restaurant_images?.data) {
             const blob = new Blob([new Uint8Array(restaurant.restaurant_images.data)], { type: 'image/png' });
             restaurant.imageUrl = URL.createObjectURL(blob);
           } else {
             restaurant.imageUrl = null;
           }
+         
           return restaurant;
         });
         setRestaurants(processedData);

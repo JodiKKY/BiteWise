@@ -11,12 +11,12 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/events" element={<Events />} />
-      <Route path="/restaurants" element={<Restaurants />} />
-      <Route path="/restaurant_owner" element={<RestaurantOwner />} />
-      <Route path="/restaurant/:id" element={<RestaurantDetails />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Signup" element={<Signup />} />
+      <Route path="/Events" element={<Events />} />
+      <Route path="/Restaurants" element={<Restaurants />} />
+      <Route path="/Restaurant_owner" element={<RestaurantOwner />} />
+      <Route path="/Restaurant/:id" element={<RestaurantDetails />} />
     </Routes>
   );
 }
