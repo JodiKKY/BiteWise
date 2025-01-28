@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from "/src/assets/1.png";
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, provider, signInWithEmailAndPassword, signInWithPopup } from './firebase'; // Update import
+import { auth, provider, signInWithEmailAndPassword, signInWithPopup } from "/Users/jodikky/Documents/GitHub/BiteWise/src/firebase"; 
 import Validation from './LoginValidation';
 
 function Login() {
