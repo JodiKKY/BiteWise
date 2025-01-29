@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import JobCard from '../components/JobCard';
-import FilterComponent from '../components/FilterComponent'
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import JobCard from "../components/JobCard";
+import FilterComponent from "../components/FilterComponent";
 
 function App() {
   const [restaurants, setRestaurants] = useState([]);
@@ -20,25 +20,26 @@ function App() {
   const fetchData = () => {
     setLoading(true);
     setError(null);
-    axios.get('http://localhost:3000/Restaurants')
-      .then(response => {
-        const processedData = response.data.map(restaurant => {
-          console.log({restaurant});
+    axios
+      .get("http://localhost:3000/Restaurants")
+      .then((response) => {
+        const processedData = response.data.map((restaurant) => {
           if (restaurant.restaurant_images?.data) {
-            const blob = new Blob([new Uint8Array(restaurant.restaurant_images.data)], { type: 'image/png' });
+            const blob = new Blob([new Uint8Array(restaurant.restaurant_images.data)], {
+              type: "image/png",
+            });
             restaurant.imageUrl = URL.createObjectURL(blob);
           } else {
             restaurant.imageUrl = null;
           }
-         
           return restaurant;
         });
         setRestaurants(processedData);
         setFilteredRestaurants(processedData);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setError('Failed to fetch restaurants. Please try again.');
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch restaurants. Please try again.");
       })
       .finally(() => setLoading(false));
   };
@@ -47,19 +48,21 @@ function App() {
     let filtered = restaurants;
 
     if (filters.priceRange) {
-      filtered = filtered.filter(r => r.priceRange === filters.priceRange);
+      filtered = filtered.filter((r) => r.priceRange === filters.priceRange);
     }
 
     if (filters.cuisine) {
-      filtered = filtered.filter(r => r.cuisine.toLowerCase() === filters.cuisine.toLowerCase());
+      filtered = filtered.filter((r) =>
+        r.cuisine.toLowerCase().includes(filters.cuisine.toLowerCase())
+      );
     }
 
     if (filters.rating) {
-      filtered = filtered.filter(r => r.rating >= parseInt(filters.rating, 10));
+      filtered = filtered.filter((r) => r.rating >= parseInt(filters.rating, 10));
     }
 
     if (searchQuery) {
-      filtered = filtered.filter(r =>
+      filtered = filtered.filter((r) =>
         r.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
@@ -68,8 +71,8 @@ function App() {
   };
 
   const formatTimeToHoursAndMinutes = (timeString) => {
-    const [time] = timeString.split('.');
-    const [hours, minutes] = time.split(':');
+    const [time] = timeString.split(".");
+    const [hours, minutes] = time.split(":");
     return `${hours}:${minutes}`;
   };
 
@@ -79,7 +82,7 @@ function App() {
       <div className="w-1/4 bg-gray-100 p-4 border-r">
         <h2 className="text-xl font-semibold mb-4">Filters</h2>
         <FilterComponent onFilter={setFilters} />
-         
+
         <button
           onClick={applyFilters}
           className="w-full mt-4 bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
@@ -90,8 +93,26 @@ function App() {
 
       {/* Main Content */}
       <div className="flex-1 p-6">
-        <h1 className="text-3xl font-semibold mb-6">Restaurants</h1>
-        
+        <h1 className="text-3xl font-semibold mb-4">Restaurants</h1>
+
+        {/* Search Bar */}
+        <div className="mb-6 flex items-center space-x-4">
+          <input
+            id="search"
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Type to search..."
+            className="p-2 border rounded-md w-1/2"
+          />
+          <button
+            onClick={applyFilters}
+            className="bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+          >
+            Search
+          </button>
+        </div>
+
         {/* Display Restaurants Button */}
         <button
           onClick={fetchData}
@@ -104,16 +125,13 @@ function App() {
         {error && <p className="text-center text-red-500">{error}</p>}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredRestaurants.map(restaurant => (
+          {filteredRestaurants.map((restaurant) => (
             <div
               key={restaurant.restaurant_id}
               onClick={() => navigate(`/restaurant/${restaurant.restaurant_id}`)}
               className="cursor-pointer"
             >
-              <JobCard
-                restaurant={restaurant}
-                formatTime={formatTimeToHoursAndMinutes}
-              />
+              <JobCard restaurant={restaurant} formatTime={formatTimeToHoursAndMinutes} />
             </div>
           ))}
         </div>
