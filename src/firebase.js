@@ -18,10 +18,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
+const googleProvider = new GoogleAuthProvider();
 // Initialize Firebase Auth and Google Provider
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 // Export everything at once to avoid duplicate exports
-export { auth, provider, analytics, signInWithEmailAndPassword, signInWithPopup };
+export { auth, provider, analytics, signInWithEmailAndPassword, signInWithPopup, googleProvider };
