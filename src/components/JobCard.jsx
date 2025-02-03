@@ -5,9 +5,9 @@ function JobCard({ restaurant, formatTime }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    console.log("Navigating to restaurant with ID:", restaurant.restaurant_id); 
+    console.log("Navigating to restaurant with ID:", restaurant.restaurant_id);
     if (restaurant.restaurant_id) {
-      navigate(`/Restaurants`);
+      navigate(`/restaurant/${restaurant.restaurant_id}`);
     } else {
       console.error("Restaurant ID is undefined");
     }
@@ -15,36 +15,45 @@ function JobCard({ restaurant, formatTime }) {
 
   return (
     <div
-      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden cursor-pointer"
+      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:scale-105"
       onClick={handleCardClick}
     >
-      {/* Display Restaurant Image */}
-      <div className="flex justify-center">
+      {/* Restaurant Image */}
+      <div className="relative w-full h-60">
         <img
-          src={restaurant.imageUrl || "https://via.placeholder.com/150"}
+          src={restaurant.imageUrl || "https://via.placeholder.com/300"}
           alt={restaurant.restaurant_name || "Restaurant"}
-          className="w-full h-60 object-cover rounded-lg mb-6"
-          onError={(e) => {
-            e.target.src = "https://via.placeholder.com/150"; 
-          }}
+          className="w-full h-full object-cover"
+          onError={(e) => (e.target.src = "https://via.placeholder.com/300")}
         />
+        {/* Cuisine Tag */}
+        <span className="absolute top-3 left-3 bg-orange-500 text-white px-3 py-1 text-xs font-semibold rounded-md">
+          {restaurant.cuisine || "Various"}
+        </span>
       </div>
 
-      {/* Restaurant Details */}
+      {/* Restaurant Info */}
       <div className="p-4">
-        <h2 className="font-bold text-black-700 text-[24px] leading-7 mb-1">
-          {restaurant.restaurant_name}
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400">{restaurant.location}</p>
-        <p className="text-gray-600 dark:text-gray-400">{restaurant.cuisine}</p>
-        <p className="text-gray-600 dark:text-gray-400">
-          Hours: {formatTime(restaurant.starting_time)} - {formatTime(restaurant.ending_time)}
+        <h2 className="font-bold text-gray-900 text-lg truncate">{restaurant.restaurant_name || "Restaurant Name"}</h2>
+        <p className="text-gray-600 text-sm">{restaurant.location || "Unknown Location"}</p>
+
+        {/* Hours */}
+        <p className="text-gray-500 text-sm mt-3">
+          ⏰ {restaurant.starting_time ? formatTime(restaurant.starting_time) : "N/A"} - {restaurant.ending_time ? formatTime(restaurant.ending_time) : "N/A"}
         </p>
-        <p className="text-gray-600 dark:text-gray-400">
-          Price: ${restaurant.minprice} - ${restaurant.maxprice}
+
+        {/* Price on a Separate Line */}
+        <p className="text-gray-700 font-semibold text-sm mt-2">
+        ₵{restaurant.minprice ? `${restaurant.minprice}` : "?"} - {restaurant.maxprice ? `${restaurant.maxprice}` : "?"}
         </p>
-        <p>{restaurant.ratings}</p>
-        <p>{restaurant.restaurant_id}</p>
+
+        {/* Rating */}
+        <div className="flex items-center mt-4">
+          <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+            ⭐ {restaurant.ratings ? restaurant.ratings.toFixed(1) : "N/A"}
+          </span>
+          <p className="text-gray-500 text-xs ml-2">{restaurant.ratings ? "Rated" : "No Ratings Yet"}</p>
+        </div>
       </div>
     </div>
   );

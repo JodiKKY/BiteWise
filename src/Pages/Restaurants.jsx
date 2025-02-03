@@ -77,15 +77,15 @@ function App() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className="w-1/4 bg-gray-100 p-4 border-r">
-        <h2 className="text-xl font-semibold mb-4">Filters</h2>
+      <div className="w-full md:w-1/4 bg-white p-6 border-r shadow-lg">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Filters</h2>
         <FilterComponent onFilter={setFilters} />
 
         <button
           onClick={applyFilters}
-          className="w-full mt-4 bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+          className="w-full mt-4 bg-orange-500 text-white py-3 rounded-md hover:bg-red-600 transition-all duration-300 font-semibold shadow-md"
         >
           Apply Filters
         </button>
@@ -93,32 +93,34 @@ function App() {
 
       {/* Main Content */}
       <div className="flex-1 p-6">
-        <h1 className="text-3xl font-semibold mb-4">Restaurants</h1>
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+          <h1 className="text-3xl font-semibold text-gray-900">Discover Restaurants</h1>
 
-        {/* Search Bar */}
-        <div className="mb-6 flex items-center space-x-4">
-          <input
-            id="search"
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Type to search..."
-            className="p-2 border rounded-md w-1/2"
-          />
-          <button
-            onClick={applyFilters}
-            className="bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
-          >
-            Search
-          </button>
+          {/* Search Bar */}
+          <div className="flex mt-4 md:mt-0 items-center space-x-4">
+            <input
+              id="search"
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search for restaurants..."
+              className="p-3 border rounded-md w-full md:w-80 shadow-md focus:ring-2 focus:ring-orange-400 outline-none"
+            />
+            <button
+              onClick={applyFilters}
+              className="bg-orange-500 text-white py-3 px-6 rounded-md hover:bg-red-600 transition-all duration-300 font-semibold shadow-md"
+            >
+              Search
+            </button>
+          </div>
         </div>
 
         {/* Display Restaurants Button */}
         <button
           onClick={fetchData}
-          className="bg-orange-500 text-white py-2 px-4 rounded-md hover:bg-red-600 mb-6"
+          className="bg-orange-500 text-white py-3 px-6 rounded-md hover:bg-red-600 transition-all duration-300 font-semibold shadow-md mb-6"
         >
-          Display Restaurants
+          Show Restaurants
         </button>
 
         {loading && <p className="text-center text-gray-500">Loading...</p>}
@@ -129,7 +131,7 @@ function App() {
             <div
               key={restaurant.restaurant_id}
               onClick={() => navigate(`/restaurant/${restaurant.restaurant_id}`)}
-              className="cursor-pointer"
+              className="cursor-pointer transform transition duration-500 hover:scale-105"
             >
               <JobCard restaurant={restaurant} formatTime={formatTimeToHoursAndMinutes} />
             </div>

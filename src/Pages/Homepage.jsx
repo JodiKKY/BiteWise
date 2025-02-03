@@ -4,37 +4,35 @@ import Flow1 from "../assets/flow1.png";
 import { Link } from "react-router-dom";
 import Bg1 from '../assets/background.png';
 
-
 const Homepage = () => {
   return (
     <div>
-      <div className="container min-h-[600px] flex items-center justify-center text-white"
+      {/* Hero Section */}
+      <div
+        className="container min-h-screen flex items-center justify-center text-white relative"
         style={{
-        backgroundImage: `url(${Bg1})`, 
+          backgroundImage: `url(${Bg1})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Hero Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-opacity-0 bg-black p-10 rounded-md">
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* Overlay for better contrast */}
+        
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 p-10 rounded-md max-w-6xl">
           {/* Text Section */}
-          <div className="flex flex-col justify-center gap-8 text-center md:text-left">
-            <h1 className="text-4xl lg:text-6xl font-semibold">
-              Delicious Food Is Waiting For You
+          <div className="flex flex-col justify-center gap-6 text-center md:text-left">
+            <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight">
+              <span className="text-orange-500">Delicious</span> Food Is <br /> Waiting For You
             </h1>
-            <p className="font-semibold text-xl md:text-2xl">
-              Welcome to Bite<span className="text-orange-500">Wise</span>.
-              Discover a world of culinary delights as you explore a diverse
-              selection of restaurants, their menus, and pricing. Share your
-              experiences by reviewing dishes and offering your favorite food
-              combo suggestions. Join our community of food lovers and make
-              every meal a memorable one! Happy dining!
+            <p className="text-lg md:text-2xl leading-relaxed text-gray-200">
+              Welcome to <span className="text-orange-500 font-bold">BiteWise</span>. Discover a world of culinary delights as you explore diverse restaurants, their menus, and pricing.
+              Share your experiences, review dishes, and suggest food combos. Join our community of food lovers and elevate your dining experience!
             </p>
             <div className="flex gap-4 items-center md:justify-start justify-center">
               <Link to="/Restaurants">
                 <button
-                  className="primary-btn hover:scale-105 duration-200"
+                  className="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:scale-105 transition-transform duration-200 shadow-lg"
                   aria-label="Explore Restaurants"
                 >
                   Explore Restaurants
@@ -46,7 +44,7 @@ const Homepage = () => {
           {/* Image Section */}
           <div className="flex flex-col justify-center">
             <img
-              className="animate-spin img-shadow w-[300px] md:w-[400px] mx-auto"
+              className="animate-spin img-shadow w-[500px] md:w-[500px] mx-auto"
               src={HeroImg}
               alt="Hero Banner"
             />
@@ -55,30 +53,27 @@ const Homepage = () => {
       </div>
 
       {/* Partner Section */}
-      <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[600px] bg-orange-500">
+      <div className="container grid grid-cols-1 md:grid-cols-2 gap-12 min-h-[600px] bg-orange-500 p-12">
         {/* Text Section */}
-        <div className="flex flex-col justify-center gap-8 text-center md:text-left pt-24 md:p-0 pb-10">
-          <h1 className="text-4xl lg:text-6xl font-semibold text-white">
-            Become a partner and know your audience
+        <div className="flex flex-col justify-center gap-6 text-center md:text-left text-white">
+          <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+            Become a <span className="text-black">Partner</span> and <br /> Know Your Audience
           </h1>
-          <p className="font-semibold">
-            Join our platform to showcase your restaurant’s delicious meals and
-            unique ambiance! Attract new customers with stunning visuals,
-            receive valuable reviews and suggestions, and expand your reach to
-            food lovers eager to discover your culinary creations. Sign up
-            today and grow your business!
+          <p className="text-lg leading-relaxed">
+            Join our platform to showcase your restaurant’s delicious meals and unique ambiance! Attract new customers with stunning visuals, receive valuable reviews, and expand your reach. 
+            Sign up today and grow your business!
           </p>
-          <Link to="/Restaurant-owner">
-            <button className="secondary-btn hover:scale-105 duration-200 items-center md:justify-start justify-center">
-              Join us
+          <Link to="/Restaurant_owner">
+            <button className="bg-white text-orange-500 px-6 py-3 rounded-lg font-semibold text-lg hover:scale-105 transition-transform duration-200 shadow-lg">
+              Join Us
             </button>
           </Link>
         </div>
 
         {/* Image Section */}
-        <div className="flex flex-col justify-center">
+        <div className="flex justify-center">
           <img
-            className="img-shadow w-[400px] mx-auto"
+            className="img-shadow w-[400px] mx-auto transform transition-all duration-500 hover:scale-110"
             src={Flow1}
             alt="Partner Section Banner"
           />
@@ -89,3 +84,4 @@ const Homepage = () => {
 };
 
 export default Homepage;
+            

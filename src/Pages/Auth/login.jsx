@@ -5,11 +5,7 @@ import { auth, provider, signInWithEmailAndPassword, signInWithPopup } from "/Us
 import Validation from './LoginValidation';
 
 function Login() {
-  const [values, setValues] = useState({
-    email: '',
-    password: ''
-  });
-
+  const [values, setValues] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -24,15 +20,13 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formErrors = Validation(values); // Validate form values
+    const formErrors = Validation(values);
     setErrors(formErrors);
 
     if (!formErrors.email && !formErrors.password) {
-      // Firebase email/password authentication
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
-          const user = userCredential.user;
-          console.log("Logged in as:", user.email);
+          console.log("Logged in as:", userCredential.user.email);
           navigate('/');
         })
         .catch((error) => {
@@ -43,7 +37,7 @@ function Login() {
   };
 
   const handleGoogleSignIn = () => {
-    signInWithPopup(auth, provider) // Use the imported provider
+    signInWithPopup(auth, provider)
       .then((result) => {
         console.log("Google login successful:", result.user);
         navigate('/');
@@ -54,85 +48,84 @@ function Login() {
   };
 
   return (
-    <section className="bg-white min-h-screen flex box-border justify-center items-center">
-      <div className="bg-[#dfa674] rounded-2xl flex max-w-3xl p-5 items-center">
-        <div className="md:w-1/2 px-8">
-          <h2 className="font-bold text-3xl text-white text-center font-serif">Login</h2>
-          <p className="text-sm mt-4 text-black">If you already a member, easily log in now.</p>
+    <section className="bg-gray-100 min-h-screen flex justify-center items-center p-6">
+      <div className="bg-white shadow-lg rounded-2xl flex max-w-4xl p-6 md:p-10 items-center">
+        <div className="md:w-1/2 px-6">
+          <h2 className="font-bold text-3xl text-gray-800 text-center font-serif">Login</h2>
+          <p className="text-sm mt-4 text-gray-600 text-center">Welcome back! Please login to continue.</p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-6">
             <div>
               <input
-                className="p-2 rounded-xl border w-full"
+                className="p-3 rounded-lg border w-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 type="email"
                 name="email"
-                placeholder="Email"
+                placeholder="Enter your email"
                 onChange={handleInput}
               />
-              {errors.email && <span className='text-danger'>{errors.email}</span>}
+              {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
             </div>
+
             <div className="relative">
               <input
-                className="p-2 rounded-xl border w-full"
+                className="p-3 rounded-lg border w-full border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 type={showPassword ? "text" : "password"}
                 name="password"
-                id="password"
-                placeholder="Password"
+                placeholder="Enter your password"
                 onChange={handleInput}
               />
-              {errors.password && <span className='text-danger'>{errors.password}</span>}
               <svg
                 onClick={togglePasswordVisibility}
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="gray"
-                className="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer z-20 opacity-100"
+                width="20"
+                height="20"
+                fill="currentColor"
                 viewBox="0 0 16 16"
               >
                 <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"></path>
               </svg>
+              {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
             </div>
+
             <button
-              className="bg-orange-500 text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-orange-400 font-medium"
+              className="bg-orange-500 text-white py-3 rounded-lg font-semibold hover:scale-105 duration-300 hover:bg-orange-400 shadow-md"
               type="submit"
             >
               Login
             </button>
           </form>
 
-          <div className="mt-6 items-center text-gray-100">
-            <hr className="border-black" />
-            <p className="text-center text-sm text-black">OR</p>
-            <hr className="border-black" />
+          <div className="mt-6 items-center text-gray-600">
+            <hr className="border-gray-300" />
+            <p className="text-center text-sm">OR</p>
+            <hr className="border-gray-300" />
           </div>
 
           <button 
             onClick={handleGoogleSignIn}
-            className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium"
+            className="bg-white border py-3 w-full rounded-lg mt-5 flex justify-center items-center text-sm font-medium shadow-md hover:scale-105 duration-300 hover:bg-gray-100"
           >
-            <svg className="mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="25px">
-              <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
-              <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
-              <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
-              <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
-            </svg>
+            <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google Icon" className="w-5 h-5 mr-2"/>
             Login with Google
           </button>
 
-          <div className="mt-10 text-sm border-b border-gray-500 py-5 playfair tooltip">Forget password?</div>
+          <div className="mt-6 text-sm text-gray-600 text-center">
+            <Link to="/forgot-password" className="hover:underline">Forgot password?</Link>
+          </div>
 
-          <div className="mt-4 text-sm flex justify-between items-center container-mr">
-            <p className="mr-3 md:mr-0">If you don't have an account..</p>
+          <div className="mt-4 text-sm flex justify-center items-center">
+            <p className="mr-2">New to BiteWise?</p>
             <Link to="/signup">
-              <button className="hover:border register text-white bg-orange-500 hover:border-gray-400 rounded-xl py-2 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300">
+              <button className="bg-orange-500 text-white py-2 px-5 rounded-lg hover:scale-105 duration-300 hover:bg-orange-400 shadow-md">
                 Register
               </button>
             </Link>
           </div>
         </div>
-        <div className="md:block hidden w-1/2">
-          <img className="rounded-2xl max-h-[1600px]" src={Image} alt="login form image" />
+
+        <div className="hidden md:block md:w-1/2">
+          <img className="rounded-2xl max-h-[500px]" src={Image} alt="Login illustration" />
         </div>
       </div>
     </section>
