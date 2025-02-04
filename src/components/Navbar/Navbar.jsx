@@ -2,7 +2,10 @@ import React from 'react'
 import LogoImg from '../../assets/logo2.png'
 import { Link } from 'react-router-dom'
 const Navbar = () => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
+
   return (
+
     
     <div className='py-1 bg-zinc-350  shadow-md top-0 left-0 w-full z-10'>
   
@@ -42,9 +45,14 @@ const Navbar = () => {
       </div>
        {/* login section  */}
        <div>
-        <Link to='/login'>
-        <button className='bg-primary text-white font-bold px-4 py-2 rounded-md hover:bg-red-600'>LOGIN</button>
-        </Link>
+        {
+          isLoggedIn? <div>
+            {/* do the profile stuff here. when you log the user out, remove isLoggedIn from localstorag(localstorage.removeItem("isLoggedIn")) */}
+            Profile
+          </div> : <Link to='/login'>
+          <button className='bg-primary text-white font-bold px-4 py-2 rounded-md hover:bg-red-600'>LOGIN</button>
+          </Link>
+        }
        </div>
       </div>
     </div>

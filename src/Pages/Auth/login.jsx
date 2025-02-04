@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from "/src/assets/1.png";
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, provider, signInWithEmailAndPassword, signInWithPopup } from "/Users/jodikky/Documents/GitHub/BiteWise/src/firebase"; 
+import { auth, provider, signInWithEmailAndPassword, signInWithPopup } from "../../firebase"; 
 import Validation from './LoginValidation';
 
 function Login() {
@@ -27,6 +27,8 @@ function Login() {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
           console.log("Logged in as:", userCredential.user.email);
+          // This is not an ideal solution, but it works.
+          localStorage.setItem("isLoggedIn",true)
           navigate('/');
         })
         .catch((error) => {
@@ -40,6 +42,8 @@ function Login() {
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log("Google login successful:", result.user);
+         // This is not an ideal solution, but it works.
+         localStorage.setItem("isLoggedIn",true)
         navigate('/');
       })
       .catch((error) => {

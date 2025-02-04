@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Image from "/src/assets/1.png";
 import Validation from "./SignupValidation";
 import axios from "axios";
-import { auth, provider } from "/Users/jodikky/Documents/GitHub/BiteWise/src/firebase"; 
+import { auth, provider } from "../../firebase"; 
 import { signInWithPopup } from "firebase/auth";
 
 function Signup() {
