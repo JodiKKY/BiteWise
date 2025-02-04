@@ -152,7 +152,7 @@ app.get("/Restaurants", (req, res) => {
   });
 });
 
-// Serve image for a specific restaurant
+
 app.get("/Restaurants/:id/image", (req, res) => {
   const restaurantId = req.params.id;
   const query = "SELECT restaurant_images FROM restaurant_table WHERE restaurant_id = ?";
@@ -167,5 +167,20 @@ app.get("/Restaurants/:id/image", (req, res) => {
     } else {
       res.status(404).send("Image not found");
     }
+  });
+});
+
+app.get("/restaurants/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT * FROM restaurant_table WHERE restaurant_id = ?";
+  
+  con.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+    res.json(results[0]);
   });
 });

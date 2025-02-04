@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import JobCard from "../components/JobCard";
@@ -70,10 +70,18 @@ function App() {
     setFilteredRestaurants(filtered);
   };
 
+  // Time formatting function
   const formatTimeToHoursAndMinutes = (timeString) => {
+    if (!timeString) return "N/A"; // Handle edge case where time is not available
+
     const [time] = timeString.split(".");
     const [hours, minutes] = time.split(":");
-    return `${hours}:${minutes}`;
+
+    // Convert to 12-hour format with AM/PM
+    const hour = parseInt(hours, 10);
+    const period = hour >= 12 ? "PM" : "AM";
+    const formattedHour = hour % 12 || 12; // Convert 0 to 12 for midnight
+    return `${formattedHour}:${minutes} ${period}`;
   };
 
   return (
@@ -133,7 +141,10 @@ function App() {
               onClick={() => navigate(`/restaurant/${restaurant.restaurant_id}`)}
               className="cursor-pointer transform transition duration-500 hover:scale-105"
             >
-              <JobCard restaurant={restaurant} formatTime={formatTimeToHoursAndMinutes} />
+              <JobCard
+                restaurant={restaurant}
+                formatTime={formatTimeToHoursAndMinutes}
+              />
             </div>
           ))}
         </div>
