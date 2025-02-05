@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { MdLocationOn } from "react-icons/md"; // Import location icon
 
 function JobCard({ restaurant, formatTime }) {
   const navigate = useNavigate();
@@ -35,16 +36,16 @@ function JobCard({ restaurant, formatTime }) {
       {/* Restaurant Info */}
       <div className="p-4">
         <h2 className="font-bold text-gray-900 text-lg truncate">{restaurant.restaurant_name || "Restaurant Name"}</h2>
-        <p className="text-gray-600 text-sm">{restaurant.location || "Unknown Location"}</p>
+        
+        {/* Location with icon */}
+        <p className="text-gray-600 text-m flex items-center">
+          <MdLocationOn className="text-gray-500 mr-2" /> {/* Location icon */}
+          {restaurant.location || "Unknown Location"}
+        </p>
 
         {/* Hours */}
         <p className="text-gray-500 text-sm mt-3">
           ⏰ {restaurant.starting_time ? formatTime(restaurant.starting_time) : "N/A"} - {restaurant.ending_time ? formatTime(restaurant.ending_time) : "N/A"}
-        </p>
-
-        {/* Price on a Separate Line */}
-        <p className="text-gray-700 font-semibold text-sm mt-2">
-        ₵{restaurant.minprice ? `${restaurant.minprice}` : "?"} - {restaurant.maxprice ? `${restaurant.maxprice}` : "?"}
         </p>
 
         {/* Rating */}
