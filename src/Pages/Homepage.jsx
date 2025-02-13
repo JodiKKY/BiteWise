@@ -7,7 +7,6 @@ import Bg1 from '../assets/background.png';
 const Homepage = () => {
   return (
     <div>
-      {/* Hero Section */}
       <div
         className="container min-h-screen flex items-center justify-center text-white relative"
         style={{
@@ -17,7 +16,7 @@ const Homepage = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div> {/* Overlay for better contrast */}
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div> 
         
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 p-10 rounded-md max-w-6xl">
           {/* Text Section */}
@@ -63,7 +62,7 @@ const Homepage = () => {
             Join our platform to showcase your restaurant’s delicious meals and unique ambiance! Attract new customers with stunning visuals, receive valuable reviews, and expand your reach. 
             Sign up today and grow your business!
           </p>
-          <Link to="/Restaurant_owner">
+          <Link to="/OwnerSignUp">
             <button className="bg-white text-orange-500 px-6 py-3 rounded-lg font-semibold text-lg hover:scale-105 transition-transform duration-200 shadow-lg">
               Join Us
             </button>

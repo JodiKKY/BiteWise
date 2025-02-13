@@ -4,9 +4,10 @@ import Restaurants from '../Pages/Restaurants';
 import Login from '../Pages/Auth/login';
 import Events from '../Pages/Events';
 import Signup from '../Pages/Auth/signup';
-import RestaurantOwner from '../Pages/Restaurant_owner';
+import OwnerDashboard from '../Pages/Restaurant_owner/OwnerDashboard';
 import RestaurantDetails from '../Pages/RestaurantDetails';
-import Ownerlogin from '../Pages/Auth/Ownerlogin';
+import OwnerLogin from '../Pages/Restaurant_owner/ownerlogin';
+import OwnerSignup from '../Pages/Restaurant_owner/OwnerSignup';
 
 function AppRoutes() {
   return (
@@ -16,9 +17,11 @@ function AppRoutes() {
       <Route path="/Signup" element={<Signup />} />
       <Route path="/Events" element={<Events />} />
       <Route path="/Restaurants" element={<Restaurants />} />
-      <Route path="/Restaurant_owner" element={<RestaurantOwner />} />
+      <Route path="/OwnerDashboard" element={<OwnerDashboard/>} />
       <Route path="/Restaurant/:id" element={<RestaurantDetails />} />
-      <Route path="/Ownerlogin" element={<Ownerlogin/>} />
+      <Route path="/OwnerLogin" element={<OwnerLogin />} />
+      <Route path="/OwnerSignup" element={<OwnerSignup />} />
+    
 
     </Routes>
   );

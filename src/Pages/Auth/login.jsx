@@ -27,7 +27,6 @@ function Login() {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
           console.log("Logged in as:", userCredential.user.email);
-          // This is not an ideal solution, but it works.
           localStorage.setItem("isLoggedIn",true)
           navigate('/');
         })
@@ -42,8 +41,7 @@ function Login() {
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log("Google login successful:", result.user);
-         // This is not an ideal solution, but it works.
-         localStorage.setItem("isLoggedIn",true)
+        localStorage.setItem("isLoggedIn",true)
         navigate('/');
       })
       .catch((error) => {
@@ -124,6 +122,13 @@ function Login() {
               <button className="bg-orange-500 text-white py-2 px-5 rounded-lg hover:scale-105 duration-300 hover:bg-orange-400 shadow-md">
                 Register
               </button>
+            </Link>
+          </div>
+
+          {/* Restaurant Owner Login */}
+          <div className="mt-4 text-sm flex justify-end">
+            <Link to="/OwnerLogin" className="text-orange-500 hover:underline">
+              Restaurant Owner? Login here
             </Link>
           </div>
         </div>
