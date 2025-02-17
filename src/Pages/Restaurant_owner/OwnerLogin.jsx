@@ -14,7 +14,7 @@ const OwnerLogin = () => {
     e.preventDefault();
 
     // Basic Form Validation
-    if (!email || !password) {
+    if (!restaurantEmail || !restaurantPassword) {
       setError('Please fill in all fields');
       return;
     }
@@ -59,8 +59,8 @@ const OwnerLogin = () => {
           {/* Email Input */}
           <div>
             <input
-              type="email"
-              name="email"
+              type="restaurantEmail"
+              name="restaurantEmail"
               className="p-4 rounded-xl border border-gray-300 shadow-sm w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Email"
               value={email}
@@ -71,8 +71,8 @@ const OwnerLogin = () => {
           {/* Password Input */}
           <div>
             <input
-              type="password"
-              name="password"
+              type="restaurantPassword"
+              name="restaurantPassword"
               className="p-4 rounded-xl border border-gray-300 shadow-sm w-full text-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Password"
               value={password}

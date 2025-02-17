@@ -4,19 +4,18 @@ import Ownerbg from '../../assets/owner.png';
 
 const OwnerSignup = () => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
     restaurantName: '',
-    address: '',
-    phone: '',
-    category: '',
+    restaurantEmail: '',
+    restaurantPassword: '',
+    location: '',
+    contact: '',
+    cuisine: '',
   });
 
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  // Handle Input Change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -25,9 +24,9 @@ const OwnerSignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form
-    const { email, password, restaurantName, address, phone, category } = formData;
-    if (!email || !password || !restaurantName || !address || !phone || !category) {
+
+    const { restaurantName, restaurantEmail, restaurantPassword, location,contact, cuisine } = formData;
+    if (!restaurantName || !restaurantEmail || !restaurantPassword|| !location || !contact || !cuisine) {
       setError('All fields are required');
       return;
     }
@@ -67,43 +66,9 @@ const OwnerSignup = () => {
             value={formData.restaurantName}
             onChange={handleChange}
           />
-
-          {/* Address */}
-          <input
-            type="text"
-            name="address"
-            className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            placeholder="Restaurant Address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-
-          <input
-            type="text"
-            name="phone"
-            className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            placeholder="Phone Number"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-
-          {/* Category Selection */}
-          <select
-            name="Cuisine"
-            className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            value={formData.category}
-            onChange={handleChange}
-          >
-            <option value="">Select Cuisine</option>
-            <option value="Fast Food">Fast Food</option>
-            <option value="Fine Dining">Fine Dining</option>
-            <option value="Cafe">Cafe</option>
-            <option value="Buffet">Buffet</option>
-            <option value="Casual Dining">Casual Dining</option>
-          </select>
-
+         
           
-          <input type="email" name="email"
+         <input type="email" name="restaurantEmail"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Email" value={formData.email}
             onChange={handleChange}
@@ -118,6 +83,39 @@ const OwnerSignup = () => {
             value={formData.password}
             onChange={handleChange}
           />
+          <input
+            type="text"
+            name="location"
+            className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+            placeholder="Restaurant Location"
+            value={formData.address}
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            name="contact"
+            className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={handleChange}
+          />
+
+          {/* Category Selection */}
+          <select
+            name="Cuisine"
+            className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+            value={formData.category}
+            onChange={handleChange}
+          >
+            <option value="">Select Cuisine</option>
+            <option value="Italian">Itailian</option>
+            <option value="Fine Dining">Fine Dining</option>
+            <option value="Cafe">Cafe</option>
+            <option value="Buffet">Buffet</option>
+            <option value="Casual Dining">Casual Dining</option>
+          </select>
+
 
           {/* Error Message */}
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}

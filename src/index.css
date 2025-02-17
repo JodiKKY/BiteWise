@@ -16,7 +16,7 @@
   }
 }
 .animate-spin {
-  animation: spin 7s linear infinite;
+  animation: spin 50s linear infinite;
   
 }
 
