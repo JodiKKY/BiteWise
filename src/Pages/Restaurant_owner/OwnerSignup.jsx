@@ -10,13 +10,14 @@ const OwnerSignup = () => {
     location: '',
     contact: '',
     cuisine: '',
-    restaurantImage: null,  // Added for potential file selection
+    restaurantImage: null,
   });
 
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  // Handle input changes (including file upload)
   const handleChange = (e) => {
     const { name, value, type } = e.target;
 
@@ -27,8 +28,8 @@ const OwnerSignup = () => {
     }
   };
 
-  // Handle Form Submission (No Backend)
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     const { restaurantName, restaurantEmail, restaurantPassword, location, contact, cuisine } = formData;
@@ -41,12 +42,31 @@ const OwnerSignup = () => {
     setError('');
     setIsSubmitting(true);
 
-    // Simulate Signup Process
-    setTimeout(() => {
-      alert('Signup successful! You can now log in.');
-      navigate('/owner-login');
+    // Send data to backend
+    const formDataObj = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataObj.append(key, formData[key]);
+    });
+
+    try {
+      const response = await fetch('http://localhost:5000/OwnerSignup', {
+        method: 'POST',
+        body: formDataObj,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Signup successful! Redirecting to login...');
+        navigate('/owner-login'); // Redirect to Owner Login
+      } else {
+        setError(result.error || 'Signup failed. Please try again.');
+      }
+    } catch (error) {
+      setError('Server error. Please try again later.');
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -126,7 +146,6 @@ const OwnerSignup = () => {
             <option value="Indian">Indian</option>
             <option value="Lebanese">Lebanese</option>
             <option value="Chinese">Chinese</option>
-            <option value="Casual Dining">Casual Dining</option>
           </select>
 
           {/* Image Upload (Optional) */}
@@ -154,7 +173,7 @@ const OwnerSignup = () => {
         {/* Already have an account? */}
         <div className="mt-4 text-center text-sm">
           <p>Already have an account?</p>
-          <Link to="/owner-login">
+          <Link to="/OwnerLogin">
             <button className="text-orange-500 hover:underline font-semibold">Login Here</button>
           </Link>
         </div>
