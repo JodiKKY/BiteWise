@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Ownerbg from '../../assets/owner.png'; 
+import Ownerbg from '../../assets/owner.png';
 
 const OwnerSignup = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ const OwnerSignup = () => {
     location: '',
     contact: '',
     cuisine: '',
+    restaurantImage: null,  // Added for potential file selection
   });
 
   const [error, setError] = useState('');
@@ -17,16 +18,22 @@ const OwnerSignup = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+
+    if (type === 'file') {
+      setFormData({ ...formData, [name]: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  // Handle Form Submission
-  const handleSubmit = async (e) => {
+  // Handle Form Submission (No Backend)
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-
-    const { restaurantName, restaurantEmail, restaurantPassword, location,contact, cuisine } = formData;
-    if (!restaurantName || !restaurantEmail || !restaurantPassword|| !location || !contact || !cuisine) {
+    
+    const { restaurantName, restaurantEmail, restaurantPassword, location, contact, cuisine } = formData;
+    
+    if (!restaurantName || !restaurantEmail || !restaurantPassword || !location || !contact || !cuisine) {
       setError('All fields are required');
       return;
     }
@@ -34,17 +41,12 @@ const OwnerSignup = () => {
     setError('');
     setIsSubmitting(true);
 
-    try {
-      // Simulated API Request (Replace with actual API call)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
+    // Simulate Signup Process
+    setTimeout(() => {
       alert('Signup successful! You can now log in.');
       navigate('/owner-login');
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 1500);
   };
 
   return (
@@ -66,56 +68,75 @@ const OwnerSignup = () => {
             value={formData.restaurantName}
             onChange={handleChange}
           />
-         
-          
-         <input type="email" name="restaurantEmail"
+
+          {/* Email */}
+          <input
+            type="email"
+            name="restaurantEmail"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            placeholder="Email" value={formData.email}
+            placeholder="Email"
+            value={formData.restaurantEmail}
             onChange={handleChange}
           />
 
           {/* Password */}
           <input
             type="password"
-            name="password"
+            name="restaurantPassword"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Password"
-            value={formData.password}
+            value={formData.restaurantPassword}
             onChange={handleChange}
           />
+
+          {/* Location */}
           <input
             type="text"
             name="location"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Restaurant Location"
-            value={formData.address}
+            value={formData.location}
             onChange={handleChange}
           />
 
+          {/* Contact Number */}
           <input
             type="text"
             name="contact"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Phone Number"
-            value={formData.phone}
+            value={formData.contact}
             onChange={handleChange}
           />
 
-          {/* Category Selection */}
+          {/* Cuisine Selection */}
           <select
-            name="Cuisine"
+            name="cuisine"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            value={formData.category}
+            value={formData.cuisine}
             onChange={handleChange}
           >
             <option value="">Select Cuisine</option>
-            <option value="Italian">Itailian</option>
-            <option value="Fine Dining">Fine Dining</option>
-            <option value="Cafe">Cafe</option>
-            <option value="Buffet">Buffet</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="International">International</option>
+            <option value="African">African</option>
+            <option value="Continental">Continental</option>
+            <option value="Turkish">Turkish</option>
+            <option value="Indian">Indian</option>
+            <option value="Lebanese">Lebanese</option>
+            <option value="Chinese">Chinese</option>
             <option value="Casual Dining">Casual Dining</option>
           </select>
 
+          {/* Image Upload (Optional) */}
+          <input
+            type="file"
+            name="restaurantImage"
+            accept="image/*"
+            className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
+            onChange={handleChange}
+          />
 
           {/* Error Message */}
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
@@ -133,7 +154,7 @@ const OwnerSignup = () => {
         {/* Already have an account? */}
         <div className="mt-4 text-center text-sm">
           <p>Already have an account?</p>
-          <Link to="/OwnerLogin">
+          <Link to="/owner-login">
             <button className="text-orange-500 hover:underline font-semibold">Login Here</button>
           </Link>
         </div>
