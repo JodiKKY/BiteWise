@@ -184,3 +184,36 @@ app.get("/restaurants/:id", (req, res) => {
     res.json(results[0]);
   });
 });
+app.post('/Signup', async (req, res) => {
+  try {
+    const { password } = req.body;
+    const pass = password.join('');
+    const pas = await bcrypt.hash(pass, 10);
+
+    console.error(pas);
+
+    const sql = "INSERT INTO user_table (email, firstName, lastName, password) VALUES (?, ?, ?, ?)";
+    const values = [
+      req.body.restaurantName,
+      req.body.restaurantEmail,
+      req.body.restaurantPassword,
+      req.body.location,
+      req.body.contact,
+      req.body.cuisine,
+      pas,
+    ];
+
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error('Error inserting data into the database:', err);
+        return res.status(500).json({ error: 'Error inserting data', details: err });
+      }
+
+      return res.status(200).json({ message: 'User data inserted successfully', result });
+    });
+
+  } catch (err) {
+    console.error('Error processing request:', err);
+    return res.status(500).json({ error: 'Error processing request', details: err });
+  }
+});
