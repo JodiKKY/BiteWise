@@ -128,16 +128,6 @@ app.get('/Restaurants', (req, res) => {
   });
 });
 
-
-// Start the server
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
-});
-
-
-
-
-
 // Folder containing the images
 const imageFolder = "./src/assets/restaurant_images";
 app.get("/Restaurants", (req, res) => {
@@ -184,7 +174,7 @@ app.get("/restaurants/:id", (req, res) => {
     res.json(results[0]);
   });
 });
-app.post('/Signup', async (req, res) => {
+app.post('/OwnerSignup', async (req, res) => {
   try {
     const { password } = req.body;
     const pass = password.join('');
@@ -192,7 +182,7 @@ app.post('/Signup', async (req, res) => {
 
     console.error(pas);
 
-    const sql = "INSERT INTO user_table (email, firstName, lastName, password) VALUES (?, ?, ?, ?)";
+    const sql = "INSERT INTO user_table (restaurantName,restaurantEmail,restaurantPassword,location,contact,cuisine) VALUES (?, ?, ?, ?,?,?, ?, ?)";
     const values = [
       req.body.restaurantName,
       req.body.restaurantEmail,
@@ -216,4 +206,7 @@ app.post('/Signup', async (req, res) => {
     console.error('Error processing request:', err);
     return res.status(500).json({ error: 'Error processing request', details: err });
   }
+});
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
 });

@@ -49,7 +49,7 @@ const OwnerSignup = () => {
     });
 
     try {
-      const response = await fetch('http://localhost:5000/OwnerSignup', {
+      const response = await fetch('http://localhost:3000/OwnerSignup', {
         method: 'POST',
         body: formDataObj,
       });
