@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Ownerbg from '../../assets/owner.png';
 
 const OwnerSignup = () => {
@@ -13,59 +14,35 @@ const OwnerSignup = () => {
     restaurantImage: null,
   });
 
-  const [error, setError] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
-  // Handle input changes (including file upload)
-  const handleChange = (e) => {
-    const { name, value, type } = e.target;
-
-    if (type === 'file') {
-      setFormData({ ...formData, [name]: e.target.files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+  const handleInput = (event) => {
+    const { name, value, type, files } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "file" ? files[0] : value,
+    }));
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const { restaurantName, restaurantEmail, restaurantPassword, location, contact, cuisine } = formData;
-    
-    if (!restaurantName || !restaurantEmail || !restaurantPassword || !location || !contact || !cuisine) {
-      setError('All fields are required');
-      return;
-    }
-
-    setError('');
-    setIsSubmitting(true);
-
-    // Send data to backend
-    const formDataObj = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formDataObj.append(key, formData[key]);
-    });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/OwnerSignup', {
-        method: 'POST',
-        body: formDataObj,
+      const formDataToSend = new FormData();
+      Object.keys(formData).forEach((key) => {
+        formDataToSend.append(key, formData[key]);
       });
 
-      const result = await response.json();
+      await axios.post("http://localhost:3000/OwnerSignup", formDataToSend, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      if (response.ok) {
-        alert('Signup successful! Redirecting to login...');
-        navigate('/owner-login'); // Redirect to Owner Login
-      } else {
-        setError(result.error || 'Signup failed. Please try again.');
-      }
+      setMessage("Signup successful!");
+      navigate("/OwnerDashboard");
     } catch (error) {
-      setError('Server error. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
+      setMessage("Signup failed. Please try again.");
+      console.error(error);
     }
   };
 
@@ -86,7 +63,7 @@ const OwnerSignup = () => {
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Restaurant Name"
             value={formData.restaurantName}
-            onChange={handleChange}
+            onChange={handleInput}
           />
 
           {/* Email */}
@@ -96,7 +73,7 @@ const OwnerSignup = () => {
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Email"
             value={formData.restaurantEmail}
-            onChange={handleChange}
+            onChange={handleInput}
           />
 
           {/* Password */}
@@ -106,7 +83,7 @@ const OwnerSignup = () => {
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Password"
             value={formData.restaurantPassword}
-            onChange={handleChange}
+            onChange={handleInput}
           />
 
           {/* Location */}
@@ -116,7 +93,7 @@ const OwnerSignup = () => {
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Restaurant Location"
             value={formData.location}
-            onChange={handleChange}
+            onChange={handleInput}
           />
 
           {/* Contact Number */}
@@ -126,7 +103,7 @@ const OwnerSignup = () => {
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             placeholder="Phone Number"
             value={formData.contact}
-            onChange={handleChange}
+            onChange={handleInput}
           />
 
           {/* Cuisine Selection */}
@@ -134,7 +111,7 @@ const OwnerSignup = () => {
             name="cuisine"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
             value={formData.cuisine}
-            onChange={handleChange}
+            onChange={handleInput}
           >
             <option value="">Select Cuisine</option>
             <option value="Italian">Italian</option>
@@ -154,19 +131,18 @@ const OwnerSignup = () => {
             name="restaurantImage"
             accept="image/*"
             className="p-4 rounded-xl border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-orange-400"
-            onChange={handleChange}
+            onChange={handleInput}
           />
 
-          {/* Error Message */}
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {/* Success or Failure Message */}
+          {message && <p className="text-green-500 text-sm text-center">{message}</p>}
 
           {/* Submit Button */}
           <button
             type="submit"
             className="bg-orange-500 text-white py-3 rounded-xl font-semibold shadow-lg hover:bg-orange-600 transition-all duration-300 disabled:bg-gray-300"
-            disabled={isSubmitting}
           >
-            {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+            Sign Up
           </button>
         </form>
 
