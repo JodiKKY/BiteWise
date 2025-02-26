@@ -11,7 +11,7 @@ const OwnerSignup = () => {
     location: '',
     contact: '',
     cuisine: '',
-    restaurantImage: null,
+    // restaurantImage: null,
   });
 
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const OwnerSignup = () => {
       Object.keys(formData).forEach((key) => {
         formDataToSend.append(key, formData[key]);
       });
-
+     console.log('new error',formDataToSend)
       await axios.post("http://localhost:3000/OwnerSignup", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });

@@ -3,8 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import bcrypt from 'bcryptjs';
-import fs from "fs";
-import path from "path";
+import multer from 'multer';
 
 
 
@@ -16,7 +15,7 @@ app.use(cors()); // Allow cross-origin requests
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// const upload = multer({ dest: "uploads/" });
+const upload = multer(); 
 
 // Create MySQL connection
 const con = mysql.createConnection({
@@ -174,39 +173,41 @@ app.get("/restaurants/:id", (req, res) => {
     res.json(results[0]);
   });
 });
-app.post('/OwnerSignup', async (req, res) => {
+
+app.post("/OwnerSignup", upload.none(), async (req, res) => {
   try {
-    const { password } = req.body;
-    const pass = password.join('');
-    const pas = await bcrypt.hash(pass, 10);
+    console.log(" Received Form Data:", req.body); // ✅ Debugging
 
-    console.error(pas);
+    const { restaurantName, restaurantEmail, restaurantPassword, location, contact, cuisine } = req.body;
 
-    const sql = "INSERT INTO user_table (restaurantName,restaurantEmail,restaurantPassword,location,contact,cuisine) VALUES (?, ?, ?, ?,?,?, ?, ?)";
-    const values = [
-      req.body.restaurantName,
-      req.body.restaurantEmail,
-      req.body.restaurantPassword,
-      req.body.location,
-      req.body.contact,
-      req.body.cuisine,
-      pas,
-    ];
+    // Check if required fields exist
+    if (!restaurantName || !restaurantEmail || !restaurantPassword || !location || !contact || !cuisine) {
+      console.error("Missing Fields:", req.body);
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(restaurantPassword, 10);
+
+    const sql = "INSERT INTO newrestaurant_table (restaurantName, restaurantEmail, restaurantPassword, location, contact, cuisine) VALUES (?, ?, ?, ?, ?, ?)";
+    const values = [restaurantName, restaurantEmail, hashedPassword, location, contact, cuisine];
 
     con.query(sql, values, (err, result) => {
       if (err) {
-        console.error('Error inserting data into the database:', err);
-        return res.status(500).json({ error: 'Error inserting data', details: err });
+        console.error("Database error:", err.sqlMessage);
+        return res.status(500).json({ error: err.sqlMessage });
       }
-
-      return res.status(200).json({ message: 'User data inserted successfully', result });
+      res.status(201).json({ message: "Owner signed up successfully!" });
     });
 
-  } catch (err) {
-    console.error('Error processing request:', err);
-    return res.status(500).json({ error: 'Error processing request', details: err });
+  } catch (error) {
+    console.error("Signup error:", error.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
+
+
+
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
 });
