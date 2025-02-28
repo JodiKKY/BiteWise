@@ -207,6 +207,50 @@ app.post("/OwnerSignup", upload.none(), async (req, res) => {
 });
 
 
+app.post('/OwnerLogin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const sql = "SELECT * FROM user_table WHERE email = ?";
+    const values = [email];
+
+    con.query(sql, values, async (err, result) => {
+      if (err) {
+        console.error('Error querying the database:', err);
+        return res.status(500).json({ error: 'Error querying the database', details: err });
+      }
+
+      // If no user is found with the given email
+      if (result.length === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Retrieve the hashed password from the database
+      const hashedPassword = result[0].password;
+
+      // Ensure both the password and hashedPassword are strings
+      const isPasswordValid = await bcrypt.compare(String(password), String(hashedPassword));
+
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: 'Invalid password' });
+      }
+
+      // Return user data if login is successful
+      return res.status(200).json({
+        message: 'Login successful',
+        user: {
+          email: result[0].email,
+          restaurantName: result[0].restaurantName,
+          lastName: result[0].lastName,
+        },
+      });
+    });
+
+  } catch (err) {
+    console.error('Error processing request:', err);
+    return res.status(500).json({ error: 'Error processing request', details: err });
+  }
+});
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
